@@ -71,18 +71,132 @@
         <div class="row row-cols-1 row-cols-lg-2">
             <div class="col-lg-8 order-last order-lg-first">
                 <pre class="line-numbers"><code class="language-javascript">
-                    //Call Hello World
-                    function helloWorld() {
-                    alert("Hello World");
+                    //get the values from the UI
+                    //starts or controller function
+                    function getValues() {
+                        //get the values from the page
+                        let startValue = document.getElementById("startValue").value;
+                        let endValue = document.getElementById("endValue").value;
+
+                        //We need to validate our input
+                        //Parse into Integers
+                        startValue = parseInt(startValue);
+                        endValue = parseInt(endValue);
+                        
+                        //Check if the numbers are int, if not alert them to enter integers
+                        if (Number.isInteger(startValue) && Number.isInteger(endValue)){
+                            //we call generateNumbers
+                            let arrayNumbers = generateNumbers(startValue, endValue);
+                            //we call displayNumbers
+                            displayNumbersAndBoldEven(arrayNumbers);
+                        } else {
+                            alert("You must enter integers");
+                        }
+
+                        
                     }
+
+                    //Generate numbers from the startValue to the endValue
+                    //logic function
+                    function generateNumbers(startValue, endValue) {
+
+                        let numberValues = []
+                        
+                        for (let i = startValue; i <= endValue; i++) {
+                            numberValues.push(i);
+                        }
+                        return numberValues;
+                    }
+
+                    //Display all the numbers and mark the even numbers bold
+                    //display or view function
+                    function displayNumbersAndBoldEven(numbers) {
+
+                        let table = document.getElementById("results");
+                        table.innerHTML = "";
+
+                        let className = "";
+
+                        numbers.forEach(element => {
+                            if (element % 2 === 0 && element !== 0) {
+                                className = "even";
+                            } 
+                            else {
+                                className = "odd";
+                            }
+                            table.innerHTML += `&lt;tr&gt;&lt;td class="${className}"&gt;${element}&lt;/td&gt;&lt;/tr&gt;`;
+                        });
+                    }  
                     </code>
                 </pre>
             </div>
             <div class="col-lg-4">
-                <p>The Code is structured in one function.</p>
-                <h5>Hello World</h5>
-                <p>Hello World is a function that displays an alert with a message of
-                    "Hello World"
+                <p>The Code is structured in three functions. The code is made in ES6.</p>
+                <h5>ZHERO</h5>
+                <p>ZHERO is a program which displays the numbers choosen by the user. If no number is chosen, it will display
+                    the default numbers (0-100). <br>
+                    The app is executed by three functions. Each function has its porpuse:
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header font-monospace" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              Controller function
+                            </button>
+                          </h2>
+                          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body text-dark">
+                              <strong class="font-monospace">getValues()</strong> 
+                              <p>
+                                  This function controls and starts the application. First, it gets the values from the user (or the default ones)
+                                  and assigns it into two variables <strong class="font-monospace">startValue</strong> and <strong class="font-monospace">endValue</strong>. 
+                                  Then, we change the values to integers calling the function <strong class="font-monospace">parseInt()</strong> and validate if the values 
+                                  are numbers. To avoid any possible bug, we have put in place and if/else statement for this purpose, but the HTML element from where the 
+                                  values are collected also has the type number. If the validation state has passed, we call the logic function and store its data in a 
+                                  variable and we pass this data to the display function to show the result to the user.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header font-monospace" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              Logic function
+                            </button>
+                          </h2>
+                          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body text-dark">
+                              <strong class="font-monospace">generateNumbers(startValue, endValue)</strong>
+                              <p>
+                                  This function returns an array of numbers between the startValue and the endValue. Both have to be passed to the function by
+                                  putting them in its arguments. First, we create a variable and we iniciate it declaring an empty array. Then we loop between the two values
+                                  and store the values passed and between them into the variable. Once it has ended the loop, it returns the array. <br>
+                                  <div class="text-uppercase d-inline bg-warning px-3 py-2 me-auto rounded-1 fw-bold fs-5">important!</div> <br>
+                                  <p class="mt-2">There is there are two variables with the same namesame name as long as the scope of the old variable
+                                    does not interfere with the new one one. For example: There are two variables but within the scope of two different functions.</p>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header font-monospace" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                              Display function
+                            </button>
+                          </h2>
+                          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                            <div class="accordion-body text-dark">
+                              <strong class="font-monospace">displayNumbersAndBoldEven(numbers)</strong>
+                              <p>
+                                  The main purpose of this function is to display in the page the numbers between the ones it has chosen the user, counting them.
+                                  First, we declare a variable <strong class="font-monospace">table</strong> and assign it to the element with the id "results". Then the inner HTML is reseted to only display
+                                  the range of numbers chosen, besides we crate another variable to control if the number is even or odd. After, we loop from the array 
+                                  of numbers passsed to the function and we check if it is even. If it is we assign the name "even" to the last variable, if not the name "odd".
+                                  Finally, we sum to the inner HTML of the table element a row and a cell of a table with the classname which it has to have with its number.        
+                                </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                 </p>
             </div>
         </div>
